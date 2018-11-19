@@ -1,24 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lBe-fg-1hS">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Intro Game View Controller-->
+        <scene sceneID="1US-rV-1RI">
+            <objects>
+                <viewController id="C6n-1W-K8R" customClass="IntroGameViewController" customModule="EelsAndEscalators" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s3c-UB-20q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="DnW-6c-rzd">
+                                <rect key="frame" x="10" y="84" width="355" height="563"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="46" translatesAutoresizingMaskIntoConstraints="NO" id="v7b-e7-Le5">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="459"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="N9V-uc-2bK">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="383"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome" translatesAutoresizingMaskIntoConstraints="NO" id="GOD-Mw-Eez">
+                                                        <rect key="frame" x="0.0" y="0.0" width="355" height="176.5"/>
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Instructions" translatesAutoresizingMaskIntoConstraints="NO" id="zrf-9v-Dcd">
+                                                        <rect key="frame" x="0.0" y="206.5" width="355" height="176.5"/>
+                                                    </imageView>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZK1-rK-Shq">
+                                                <rect key="frame" x="0.0" y="429" width="355" height="30"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Player Name" translatesAutoresizingMaskIntoConstraints="NO" id="VTc-2b-QNj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="172.5" height="30"/>
+                                                    </imageView>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Player Name Here!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MEi-q8-NH9">
+                                                        <rect key="frame" x="182.5" y="0.0" width="172.5" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="67y-Ud-lpC"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3J-YI-QQC">
+                                        <rect key="frame" x="9" y="492" width="337" height="71"/>
+                                        <state key="normal" image="start game button">
+                                            <color key="titleColor" red="0.5153285353320447" green="1" blue="0.021377037758086859" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startButtonPressed:" destination="C6n-1W-K8R" eventType="touchUpInside" id="YMU-go-hCs"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DnW-6c-rzd" firstAttribute="top" secondItem="pqP-lf-W1L" secondAttribute="top" constant="20" id="DQr-ss-V2a"/>
+                            <constraint firstItem="pqP-lf-W1L" firstAttribute="bottom" secondItem="DnW-6c-rzd" secondAttribute="bottom" constant="20" id="cMd-Tg-3RD"/>
+                            <constraint firstItem="DnW-6c-rzd" firstAttribute="leading" secondItem="s3c-UB-20q" secondAttribute="leading" constant="10" id="hkH-Ca-ysm"/>
+                            <constraint firstItem="pqP-lf-W1L" firstAttribute="trailing" secondItem="DnW-6c-rzd" secondAttribute="trailing" constant="10" id="ugo-hD-TcT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pqP-lf-W1L"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="BhD-W3-RMR"/>
+                    <connections>
+                        <outlet property="playerNameTextField" destination="MEi-q8-NH9" id="4aA-w2-QIU"/>
+                        <outlet property="startButton" destination="w3J-YI-QQC" id="OFM-bR-5Vr"/>
+                        <segue destination="BV1-FR-VrT" kind="show" identifier="startGameSegue" id="m8e-nV-d9s"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vxd-UW-s94" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1384.8" y="133.5832083958021"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="EelsAndEscalators" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
+                    <navigationItem key="navigationItem" id="0Pa-rD-rrv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="2324" y="133.5832083958021"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hNv-Jz-kcH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lBe-fg-1hS" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="zSO-Xa-wfx">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="C6n-1W-K8R" kind="relationship" relationship="rootViewController" id="7HW-Ul-H0i"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p9A-A0-pDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="445.60000000000002" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Instructions" width="802" height="366"/>
+        <image name="Player Name" width="336" height="59"/>
+        <image name="Welcome" width="397" height="103"/>
+        <image name="start game button" width="337" height="71"/>
+    </resources>
 </document>
