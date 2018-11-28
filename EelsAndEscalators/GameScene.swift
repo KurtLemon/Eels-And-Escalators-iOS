@@ -22,8 +22,8 @@ class GameScene: SKScene {
     var currentSpacePlayer1: String = "s0"
     var currentSpacePlayer2: String = "s0"
     
-    var moves: Int = 1
-    var movesRemaining: Int = 20
+    var moves: Int = 4
+    var movesRemaining: Int = 5
     var whosTurn: Player = .Player1
     
     var player1Piece: SKSpriteNode = SKSpriteNode()
