@@ -9,80 +9,108 @@
 import SpriteKit
 import GameplayKit
 
+
+enum Player: Int {
+    case Player1 = 1, Player2
+}
+
 class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    var currentSpacePlayer1: String = "s0"
+    var currentSpacePlayer2: String = "s0"
+    
+    var moves: Int = 1
+    var movesRemaining: Int = 20
+    var whosTurn: Player = .Player1
+    
+    var player1Piece: SKSpriteNode = SKSpriteNode()
+    var player2Piece: SKSpriteNode = SKSpriteNode()
+    
+    var background = SKSpriteNode()
+    
     override func didMove(to view: SKView) {
-        
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+        for node in children {
+            if node.name == "player1Piece" {
+                if let someNode: SKSpriteNode = node as? SKSpriteNode {
+                    player1Piece = someNode
+                }
+            } else if node.name == "player2Piece" {
+                if let someNode: SKSpriteNode = node as? SKSpriteNode {
+                    player2Piece = someNode
+                }
+            }
         }
-        
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
+    }
+    
+    func movePiece() {
+        if (movesRemaining > 0) {
+            let currentSpace: String = returnPlayerSpace(player: whosTurn)
+            var spaceNumber: String = currentSpace
             
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
+            let firstCharacter: Character = spaceNumber.remove(at: spaceNumber.startIndex)
+            let nextNumber:Int = Int(spaceNumber)! + 1
+            let nextSpace: String = String(firstCharacter) + String(nextNumber)
+            
+            for node in children {
+                if(node.name == nextSpace) {
+                    let moveAction: SKAction = SKAction.move(to: node.position, duration: 0.5)
+                    moveAction.timingMode = .easeOut
+                    let wait: SKAction = SKAction.wait(forDuration: 0.2)
+                    let runAction:SKAction = SKAction.run {
+                        self.setThePlayerSpace(space: nextSpace, player: self.whosTurn)
+                        self.movesRemaining = self.movesRemaining - 1
+                        
+                        self.movePiece()
+                    }
+                    returnPlayerPiece(player: whosTurn).run(SKAction.sequence([moveAction, wait, runAction]))
+                }
+            }
+        } else {
+            if (whosTurn == .Player1) {
+                whosTurn = .Player2
+            } else {
+                whosTurn = .Player1
+            }
         }
     }
     
+    func returnPlayerPiece(player: Player) -> SKSpriteNode {
+        var playerPiece: SKSpriteNode = SKSpriteNode()
+        if (player == .Player1) {
+            playerPiece = player1Piece
+        } else {
+            playerPiece = player2Piece
+        }
+        
+        return playerPiece
+    }
     
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
+    func setThePlayerSpace(space: String, player: Player) {
+        if(player == .Player1) {
+            currentSpacePlayer1 = space
+        } else {
+            currentSpacePlayer2 = space
         }
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
+    func returnPlayerSpace(player: Player) -> String {
+        var space: String = ""
+        if(player == .Player1) {
+            space = currentSpacePlayer1
+        } else if(player == .Player2){
+            space = currentSpacePlayer2
         }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+        return space
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
-        
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        movesRemaining = moves
+        movePiece()
     }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
+
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }

@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Intro Game View Controller-->
+        <!--Eels and Escalators-->
         <scene sceneID="1US-rV-1RI">
             <objects>
                 <viewController id="C6n-1W-K8R" customClass="IntroGameViewController" customModule="EelsAndEscalators" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,40 +21,40 @@
                                 <rect key="frame" x="10" y="84" width="355" height="563"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="46" translatesAutoresizingMaskIntoConstraints="NO" id="v7b-e7-Le5">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="459"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="382"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="N9V-uc-2bK">
-                                                <rect key="frame" x="0.0" y="0.0" width="355" height="383"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="286"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome" translatesAutoresizingMaskIntoConstraints="NO" id="GOD-Mw-Eez">
-                                                        <rect key="frame" x="0.0" y="0.0" width="355" height="176.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="355" height="128"/>
                                                     </imageView>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Instructions" translatesAutoresizingMaskIntoConstraints="NO" id="zrf-9v-Dcd">
-                                                        <rect key="frame" x="0.0" y="206.5" width="355" height="176.5"/>
+                                                        <rect key="frame" x="0.0" y="158" width="355" height="128"/>
                                                     </imageView>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZK1-rK-Shq">
-                                                <rect key="frame" x="0.0" y="429" width="355" height="30"/>
+                                                <rect key="frame" x="0.0" y="332" width="355" height="50"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Player Name" translatesAutoresizingMaskIntoConstraints="NO" id="VTc-2b-QNj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="172.5" height="30"/>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Player Name" translatesAutoresizingMaskIntoConstraints="NO" id="VTc-2b-QNj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="172.5" height="50"/>
                                                     </imageView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Player Name Here!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MEi-q8-NH9">
-                                                        <rect key="frame" x="182.5" y="0.0" width="172.5" height="30"/>
+                                                        <rect key="frame" x="182.5" y="0.0" width="172.5" height="50"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="67y-Ud-lpC"/>
+                                                    <constraint firstAttribute="height" constant="50" id="67y-Ud-lpC"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3J-YI-QQC">
-                                        <rect key="frame" x="9" y="492" width="337" height="71"/>
+                                        <rect key="frame" x="0.0" y="415" width="355" height="148"/>
                                         <state key="normal" image="start game button">
                                             <color key="titleColor" red="0.5153285353320447" green="1" blue="0.021377037758086859" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -74,7 +74,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pqP-lf-W1L"/>
                     </view>
-                    <navigationItem key="navigationItem" id="BhD-W3-RMR"/>
+                    <navigationItem key="navigationItem" title="Eels and Escalators" largeTitleDisplayMode="never" id="BhD-W3-RMR"/>
                     <connections>
                         <outlet property="playerNameTextField" destination="MEi-q8-NH9" id="4aA-w2-QIU"/>
                         <outlet property="startButton" destination="w3J-YI-QQC" id="OFM-bR-5Vr"/>
@@ -121,9 +121,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Instructions" width="802" height="366"/>
-        <image name="Player Name" width="336" height="59"/>
-        <image name="Welcome" width="397" height="103"/>
-        <image name="start game button" width="337" height="71"/>
+        <image name="Instructions" width="452" height="152"/>
+        <image name="Player Name" width="496" height="102"/>
+        <image name="Welcome" width="306" height="79"/>
+        <image name="start game button" width="570" height="148"/>
     </resources>
 </document>

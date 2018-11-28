@@ -15,8 +15,22 @@ class IntroGameViewController: UIViewController {
     @IBOutlet weak var titleView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "welcomeBackground.png")!)
+//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "welcomeBackground.png")!)
+        self.navigationController?.isNavigationBarHidden = true
+        assignBackground()
+    }
+    
+    func assignBackground() {
+        let background = UIImage(named: "welcomeBackground.png")
         
+        var imageView: UIImageView!
+        imageView = UIImageView(frame: view.bounds)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = background
+        imageView.center = view.center
+        view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
