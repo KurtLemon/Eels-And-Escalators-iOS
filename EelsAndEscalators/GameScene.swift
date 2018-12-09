@@ -8,19 +8,30 @@
 
 import SpriteKit
 import GameplayKit
+import Foundation
+import UIKit
 
 
 enum Player: Int {
-    case Player1 = 1, Player2
+    case Player1 = 1, Player2 = 2
 }
 
 class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+//    private var label : SKLabelNode?
+//    private var spinnyNode : SKShapeNode?
+    
+    var player1Name: String = ""
     
     var currentSpacePlayer1: String = "s0"
     var currentSpacePlayer2: String = "s0"
+    
+    let eelStart: [Int] = [6, 15, 20, 22]
+    let eelEnd: [Int] = [3, 1, 17, 4]
+    let escalatorStart: [Int] = [2, 5, 14]
+    let escalatorEnd: [Int] = [13, 10, 19]
+    
+    var tapCount = 0
     
     var moves: Int = 4
     var movesRemaining: Int = 5
@@ -77,10 +88,33 @@ class GameScene: SKScene {
                 }
             }
         } else {
-            if (whosTurn == .Player1) {
-                whosTurn = .Player2
-            } else {
-                whosTurn = .Player1
+            let currentSpace: Int = returnPlayerSpaceInt(player: whosTurn)
+            if let startIndex: Int = eelStart.firstIndex(of: currentSpace) {
+                let moveToSpace = eelEnd[startIndex]
+                let endSpace: String = "s\(moveToSpace)"
+                for node in children {
+                    if node.name == endSpace {
+                        let moveAction: SKAction = SKAction.move(to: node.position, duration: 0.5)
+                        moveAction.timingMode = .easeOut
+                        let runAction:SKAction = SKAction.run {
+                            self.setThePlayerSpace(space: endSpace, player: self.whosTurn)
+                        }
+                        returnPlayerPiece(player: whosTurn).run(SKAction.sequence([moveAction, runAction]))
+                    }
+                }
+            } else if let startIndex: Int = escalatorStart.firstIndex(of: currentSpace) {
+                let moveToSpace = escalatorEnd[startIndex]
+                let endSpace: String = "s\(moveToSpace)"
+                for node in children {
+                    if node.name == endSpace {
+                        let moveAction: SKAction = SKAction.move(to: node.position, duration: 0.5)
+                        moveAction.timingMode = .easeOut
+                        let runAction:SKAction = SKAction.run {
+                            self.setThePlayerSpace(space: endSpace, player: self.whosTurn)
+                        }
+                        returnPlayerPiece(player: whosTurn).run(SKAction.sequence([moveAction, runAction]))
+                    }
+                }
             }
         }
     }
@@ -114,12 +148,83 @@ class GameScene: SKScene {
         return space
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        movesRemaining = moves
-        movePiece()
+    func returnPlayerSpaceInt(player: Player) -> Int {
+        if(player == .Player1) {
+            let currentSpace: String = returnPlayerSpace(player: whosTurn)
+            var spaceNumber: String = currentSpace
+            
+            spaceNumber.remove(at: spaceNumber.startIndex)
+            return Int(spaceNumber)!
+        } else if(player == .Player2){
+            let currentSpace: String = returnPlayerSpace(player: whosTurn)
+            var spaceNumber: String = currentSpace
+            
+            spaceNumber.remove(at: spaceNumber.startIndex)
+            return Int(spaceNumber)!
+        }
+        return 0
     }
     
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (tapCount % 2 == 1) {
+            moves = Int.random(in: 1...6)
+            if moves == 5 {
+                for i in stride(from: 2, to: -1, by: -1) {
+                    if escalatorStart[i] > returnPlayerSpaceInt(player: whosTurn) {
+                        movesRemaining = escalatorStart[i] - returnPlayerSpaceInt(player: whosTurn)
+                    }
+                }
+            } else if moves == 6 {
+                for i in stride(from: 3, to: -1, by: -1) {
+                    if eelStart[i] > returnPlayerSpaceInt(player: whosTurn) {
+                        movesRemaining = eelStart[i] - returnPlayerSpaceInt(player: whosTurn)
+                    }
+                }
+            } else {
+                movesRemaining = moves
+            }
+            for node in children {
+                if node.name == "diceLabel" {
+                    if let labelNode = node as? SKLabelNode {
+                        if moves == 5 {
+                            labelNode.text = "Escalators!"
+                        } else if moves == 6 {
+                            labelNode.text = "Eeeeeellss!"
+                        } else {
+                            labelNode.text = "\(moves)"
+                        }
+                        
+                    }
+                }
+            }
+            movePiece()
+        } else {
+            print("\(whosTurn)")
+            if (whosTurn == .Player1) {
+                whosTurn = .Player2
+            } else {
+                whosTurn = .Player1
+            }
+            for node in children {
+                if node.name == "playerLabel" {
+                    if let labelNode = node as? SKLabelNode {
+                        if (whosTurn == .Player1) {
+                            labelNode.text = "\(player1Name)'s Turn"
+                        } else {
+                            labelNode.text = "AI's Turn"
+                        }
+                        
+                    }
+                }else if node.name == "diceLabel" {
+                    if let labelNode = node as? SKLabelNode {
+                        labelNode.text = "Roll"
+                    }
+                }
+            }
+            print("done")
+        }
+        tapCount += 1
+    }
 
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered

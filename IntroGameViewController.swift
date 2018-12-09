@@ -50,6 +50,7 @@ class IntroGameViewController: UIViewController, UITextFieldDelegate {
                     print("starting the game")
                     if let playerName = playerNameTextField.text {
                         print("Player name saved: \(playerNameTextField.text!)")
+                        gameVC.player1Name = playerName
                     }
                 }
             }
