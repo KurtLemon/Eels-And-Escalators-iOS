@@ -18,9 +18,6 @@ enum Player: Int {
 
 class GameScene: SKScene {
     
-//    private var label : SKLabelNode?
-//    private var spinnyNode : SKShapeNode?
-    
     var player1Name: String = ""
     
     var currentSpacePlayer1: String = "s0"
