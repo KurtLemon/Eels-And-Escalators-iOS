@@ -32,6 +32,7 @@ class GameScene: SKScene {
     var background = SKSpriteNode()
     
     override func didMove(to view: SKView) {
+        addBackground()
         for node in children {
             if node.name == "player1Piece" {
                 if let someNode: SKSpriteNode = node as? SKSpriteNode {
@@ -43,6 +44,13 @@ class GameScene: SKScene {
                 }
             }
         }
+    }
+    
+    func addBackground() {
+        background = SKSpriteNode(imageNamed: "gameBoard")
+        background.size = CGSize(width: self.frame.width, height: self.frame.height)
+        background.zPosition = -1
+        addChild(background)
     }
     
     func movePiece() {
@@ -110,6 +118,8 @@ class GameScene: SKScene {
         movesRemaining = moves
         movePiece()
     }
+    
+    
 
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered

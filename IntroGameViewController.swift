@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IntroGameViewController: UIViewController {
+class IntroGameViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var playerNameTextField: UITextField!
     @IBOutlet weak var startButton: UIButton!
@@ -17,7 +17,17 @@ class IntroGameViewController: UIViewController {
         super.viewDidLoad()
 //        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "welcomeBackground.png")!)
         self.navigationController?.isNavigationBarHidden = true
+        playerNameTextField.delegate = self
         assignBackground()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     func assignBackground() {
