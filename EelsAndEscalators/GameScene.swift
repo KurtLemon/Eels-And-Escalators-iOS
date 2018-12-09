@@ -30,6 +30,8 @@ class GameScene: SKScene {
     
     var tapCount = 0
     
+    var gameOver: Bool = false
+    
     var moves: Int = 4
     var movesRemaining: Int = 5
     var whosTurn: Player = .Player1
@@ -69,6 +71,10 @@ class GameScene: SKScene {
             let firstCharacter: Character = spaceNumber.remove(at: spaceNumber.startIndex)
             let nextNumber:Int = Int(spaceNumber)! + 1
             let nextSpace: String = String(firstCharacter) + String(nextNumber)
+            if nextSpace == "s23" {
+                gameOver = true
+                print("Youre a loser")
+            }
             
             for node in children {
                 if(node.name == nextSpace) {
@@ -84,6 +90,7 @@ class GameScene: SKScene {
                     returnPlayerPiece(player: whosTurn).run(SKAction.sequence([moveAction, wait, runAction]))
                 }
             }
+            
         } else {
             let currentSpace: Int = returnPlayerSpaceInt(player: whosTurn)
             if let startIndex: Int = eelStart.firstIndex(of: currentSpace) {
@@ -163,64 +170,77 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if (tapCount % 2 == 1) {
-            moves = Int.random(in: 1...6)
-            if moves == 5 {
-                for i in stride(from: 2, to: -1, by: -1) {
-                    if escalatorStart[i] > returnPlayerSpaceInt(player: whosTurn) {
-                        movesRemaining = escalatorStart[i] - returnPlayerSpaceInt(player: whosTurn)
-                    }
-                }
-            } else if moves == 6 {
-                for i in stride(from: 3, to: -1, by: -1) {
-                    if eelStart[i] > returnPlayerSpaceInt(player: whosTurn) {
-                        movesRemaining = eelStart[i] - returnPlayerSpaceInt(player: whosTurn)
-                    }
-                }
-            } else {
-                movesRemaining = moves
-            }
-            for node in children {
-                if node.name == "diceLabel" {
-                    if let labelNode = node as? SKLabelNode {
-                        if moves == 5 {
-                            labelNode.text = "Escalators!"
-                        } else if moves == 6 {
-                            labelNode.text = "Eeeeeellss!"
-                        } else {
-                            labelNode.text = "\(moves)"
+        if !gameOver {
+            if (tapCount % 2 == 1) {
+                moves = Int.random(in: 1...6)
+                if moves == 5 {
+                    for i in stride(from: 2, to: -1, by: -1) {
+                        if escalatorStart[i] > returnPlayerSpaceInt(player: whosTurn) {
+                            movesRemaining = escalatorStart[i] - returnPlayerSpaceInt(player: whosTurn)
                         }
-                        
+                    }
+                } else if moves == 6 {
+                    for i in stride(from: 3, to: -1, by: -1) {
+                        if eelStart[i] > returnPlayerSpaceInt(player: whosTurn) {
+                            movesRemaining = eelStart[i] - returnPlayerSpaceInt(player: whosTurn)
+                        }
+                    }
+                } else {
+                    movesRemaining = moves
+                }
+                for node in children {
+                    if node.name == "diceLabel" {
+                        if let labelNode = node as? SKLabelNode {
+                            if moves == 5 {
+                                labelNode.text = "Escalators!"
+                            } else if moves == 6 {
+                                labelNode.text = "Eeeeeellss!"
+                            } else {
+                                labelNode.text = "\(moves)"
+                            }
+                            
+                        }
                     }
                 }
+                movePiece()
+            } else {
+                print("\(whosTurn)")
+                if (whosTurn == .Player1) {
+                    whosTurn = .Player2
+                } else {
+                    whosTurn = .Player1
+                }
+                for node in children {
+                    if node.name == "playerLabel" {
+                        if let labelNode = node as? SKLabelNode {
+                            if (whosTurn == .Player1) {
+                                labelNode.text = "\(player1Name)'s Turn"
+                            } else {
+                                labelNode.text = "Spongebob's Turn"
+                            }
+                            
+                        }
+                    }else if node.name == "diceLabel" {
+                        if let labelNode = node as? SKLabelNode {
+                            labelNode.text = "Roll"
+                        }
+                    }
+                }
+                print("done")
             }
-            movePiece()
+            tapCount += 1
         } else {
-            print("\(whosTurn)")
-            if (whosTurn == .Player1) {
-                whosTurn = .Player2
-            } else {
-                whosTurn = .Player1
-            }
             for node in children {
-                if node.name == "playerLabel" {
-                    if let labelNode = node as? SKLabelNode {
-                        if (whosTurn == .Player1) {
-                            labelNode.text = "\(player1Name)'s Turn"
-                        } else {
-                            labelNode.text = "AI's Turn"
-                        }
-                        
+                if let labelNode = node as? SKLabelNode {
+                    if node.name == "playerLabel" {
+                        labelNode.text = "Game Over"
                     }
-                }else if node.name == "diceLabel" {
-                    if let labelNode = node as? SKLabelNode {
-                        labelNode.text = "Roll"
-                    }
+                    
                 }
             }
-            print("done")
+            print("game over")
         }
-        tapCount += 1
+        
     }
 
     override func update(_ currentTime: TimeInterval) {
